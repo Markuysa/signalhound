@@ -1,0 +1,102 @@
+name: CI
+
+# The merge gate. In autopilot mode nothing reaches main without this passing,
+# so it runs the same commands the validator role runs locally.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  go:
+    name: Go
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The repository starts without a Go module; the foundation ticket creates it.
+      # Until then this job passes trivially rather than blocking every merge.
+      - id: check
+        run: |
+          if [ -f go.mod ]; then echo "present=true" >> "$GITHUB_OUTPUT";
+          else echo "present=false" >> "$GITHUB_OUTPUT"; echo "No go.mod yet — skipping."; fi
+
+      - if: steps.check.outputs.present == 'true'
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: true
+
+      - if: steps.check.outputs.present == 'true'
+        run: go build ./...
+
+      - if: steps.check.outputs.present == 'true'
+        run: go vet ./...
+
+      - if: steps.check.outputs.present == 'true'
+        run: go test -race -count=1 ./...
+
+      - if: steps.check.outputs.present == 'true'
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: latest
+
+  ui:
+    name: UI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: check
+        run: |
+          if [ -f ui/package.json ]; then echo "present=true" >> "$GITHUB_OUTPUT";
+          else echo "present=false" >> "$GITHUB_OUTPUT"; echo "No ui/package.json yet — skipping."; fi
+
+      - if: steps.check.outputs.present == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: ui/package-lock.json
+
+      - if: steps.check.outputs.present == 'true'
+        working-directory: ui
+        run: npm ci
+
+      - if: steps.check.outputs.present == 'true'
+        working-directory: ui
+        run: npm run lint
+
+      - if: steps.check.outputs.present == 'true'
+        working-directory: ui
+        run: npm test
+
+      - if: steps.check.outputs.present == 'true'
+        working-directory: ui
+        run: npm run build
+
+  secrets:
+    name: No secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # An autopilot run merges without a human reading the diff, so this is the
+      # last thing standing between a leaked key and the default branch.
+      - run: |
+          if git ls-files | grep -E '(^|/)(\.env|config\.yaml)$'; then
+            echo "::error::config.yaml or .env is tracked — these must stay gitignored."
+            exit 1
+          fi
+          if git grep -nIE '(sk-ant-[A-Za-z0-9]{20}|sk-[A-Za-z0-9]{32}|ghp_[A-Za-z0-9]{36})' -- . ; then
+            echo "::error::A credential-shaped string is committed."
+            exit 1
+          fi
+          echo "Clean."

@@ -58,7 +58,6 @@
       "Bash(docker system prune *)",
       "Bash(* migrate deploy *)",
       "Bash(* db push *)",
-      "Bash(gh pr merge *)",
       "Bash(gh release create *)",
       "Bash(git merge *)",
       "Bash(git rebase *)"
@@ -67,7 +66,9 @@
       "Bash(git push *)",
       "Bash(rm -rf *)",
       "Bash(gh repo delete *)",
-      "Bash(git worktree remove --force *)"
+      "Bash(git worktree remove --force *)",
+      "Bash(gh pr merge *)",
+      "Bash(gh pr merge --admin *)"
     ],
     "allow": [
       "Read(docs/**)",
@@ -119,7 +120,8 @@
       "Bash(golangci-lint run *)",
       "Bash(npm ci *)",
       "Bash(npm run *)",
-      "Bash(npm test *)"
+      "Bash(npm test *)",
+      "Bash(gh pr merge --auto --squash *)"
     ]
   },
   "worktree": {

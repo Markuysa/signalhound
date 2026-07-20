@@ -67,11 +67,27 @@ anywhere else. In the PR body:
 **7. Hand off.** Swap `in-progress` for `in-review` on the issue. File anything you noticed
 but did not fix as a new issue labeled `ready`, linked to this one.
 
+**8. Autopilot, only if you were asked for it.** If — and only if — the request that started
+this run said autopilot, queue the pull request for automatic merge:
+
+```
+gh pr merge --auto --squash <pr>
+```
+
+This does not merge anything itself. It tells GitHub to merge *when the required checks
+pass*, so CI becomes the gate that a human otherwise would be. If the repository has no
+required checks configured, `--auto` merges immediately on an approving state — do not use
+autopilot on such a repository, say so and stop instead.
+
+Say plainly in your report that the pull request was queued for auto-merge, and name the
+checks it is waiting on.
+
 ## Never
 
-**Do not merge the pull request, push to a protected branch, force-push, or create a
-release.** A human merges. That rule does not relax because the run is autonomous — it
-matters more here, since nobody watched the diff being written.
+**Do not merge a pull request outright, push to a protected branch, force-push, or create a
+release.** `gh pr merge --auto` in step 8 is the sole exception, and only under autopilot:
+it defers the decision to CI rather than making it. Merging directly is never yours to do —
+that matters more in an autonomous run, not less, since nobody watched the diff being written.
 
 If you cannot finish, say what you completed, what is left, and what you would need. A
 half-finished ticket described honestly is recoverable; a half-finished ticket reported as
