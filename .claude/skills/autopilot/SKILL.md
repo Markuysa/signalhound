@@ -30,7 +30,9 @@ Check every item and **refuse if any fails**, naming the failure and the fix:
    `required_status_checks.contexts` must be non-empty. If protection is absent or the list
    is empty, `gh pr merge --auto` merges on the spot and autopilot means nothing. This is
    the check that matters most — do not wave it through because a workflow file exists.
-3. **Auto-merge is enabled on the repository** — `gh repo view --json autoMergeAllowed`.
+3. **Auto-merge is enabled on the repository** — `gh api repos/{owner}/{repo} -q .allow_auto_merge`
+   must be `true`. (`gh repo view --json autoMergeAllowed` does not exist; the field is only
+   exposed by the REST API.)
 4. **There is at least one `ready` issue.** If everything is `blocked`, run `unblock` first
    and say so.
 
