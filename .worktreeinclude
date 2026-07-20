@@ -1,0 +1,7 @@
+# Gitignored files copied into every new worktree.
+# A worktree is a fresh checkout, so without this an agent starts with no config
+# and fails on its first run.
+
+.env
+.env.local
+config.yaml
