@@ -5,7 +5,20 @@ argument-hint: "[max tickets in flight, default 1]"
 allowed-tools: Bash(gh issue *), Read, Write, Edit, Grep, Glob, Bash, Agent
 ---
 
-Max in flight: $ARGUMENTS (default **1** — strictly one ticket at a time).
+Requested: $ARGUMENTS
+
+## 0. Read the kill switch
+
+Read `.claude/autopilot.json`.
+
+- `maxInFlight` from that file is the limit for step 1, unless the request passed a number,
+  which wins.
+- If this run was started by a routine or asked for **autopilot**, and `enabled` is `false`,
+  **stop immediately**. Say autopilot is off and that `/autopilot on` turns it back on. Do
+  not work the ticket anyway.
+
+A human asking for one ticket directly in a session is not autopilot — serve that whatever
+the flag says. The switch governs unattended execution, not the skill.
 
 ## 1. Check whether there is room
 

@@ -121,7 +121,9 @@
       "Bash(npm ci *)",
       "Bash(npm run *)",
       "Bash(npm test *)",
-      "Bash(gh pr merge --auto --squash *)"
+      "Bash(gh pr merge --auto --squash *)",
+      "Bash(gh api repos/*)",
+      "Read(.claude/autopilot.json)"
     ]
   },
   "worktree": {
