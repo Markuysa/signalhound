@@ -66,7 +66,8 @@
     "ask": [
       "Bash(git push *)",
       "Bash(rm -rf *)",
-      "Bash(gh repo delete *)"
+      "Bash(gh repo delete *)",
+      "Bash(git worktree remove --force *)"
     ],
     "allow": [
       "Read(docs/**)",
@@ -74,7 +75,7 @@
       "Read(tests/**)",
       "Bash(git diff *)",
       "Bash(git log *)",
-      "Bash(git status)",
+      "Bash(git status *)",
       "Bash(git worktree list)",
       "Bash(git branch *)",
       "Bash(gh issue view *)",
@@ -91,7 +92,34 @@
       "Bash(gh pr create *)",
       "Bash(gh repo view *)",
       "Bash(gh run list *)",
-      "Bash(gh run view *)"
+      "Bash(gh run view *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git checkout *)",
+      "Bash(git switch *)",
+      "Bash(git restore *)",
+      "Bash(git stash *)",
+      "Bash(git show *)",
+      "Bash(git rev-parse *)",
+      "Bash(git symbolic-ref *)",
+      "Bash(git worktree add *)",
+      "Bash(git worktree remove *)",
+      "Bash(git fetch *)",
+      "Bash(git remote -v)",
+      "Bash(go test *)",
+      "Bash(go build *)",
+      "Bash(go run *)",
+      "Bash(go vet *)",
+      "Bash(go fmt *)",
+      "Bash(gofmt *)",
+      "Bash(go mod tidy *)",
+      "Bash(go mod download *)",
+      "Bash(go mod init *)",
+      "Bash(go generate *)",
+      "Bash(golangci-lint run *)",
+      "Bash(npm ci *)",
+      "Bash(npm run *)",
+      "Bash(npm test *)"
     ]
   },
   "worktree": {
