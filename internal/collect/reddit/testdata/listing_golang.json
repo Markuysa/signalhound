@@ -1,0 +1,46 @@
+{
+  "kind": "Listing",
+  "data": {
+    "after": "t3_r2p001",
+    "dist": 2,
+    "before": null,
+    "children": [
+      {
+        "kind": "t3",
+        "data": {
+          "id": "r2p003",
+          "name": "t3_r2p003",
+          "subreddit": "golang",
+          "subreddit_name_prefixed": "r/golang",
+          "title": "Anyone running an LLM scoring pipeline in Go in production?",
+          "selftext": "We are wiring an LLM call into a worker pool and the cost is getting away from us. Considering bringing in outside help before we scale it further.",
+          "author": "gopher_ana",
+          "permalink": "/r/golang/comments/r2p003/anyone_running_an_llm_scoring_pipeline_in_go/",
+          "url": "https://www.reddit.com/r/golang/comments/r2p003/anyone_running_an_llm_scoring_pipeline_in_go/",
+          "score": 63,
+          "num_comments": 19,
+          "over_18": false,
+          "created_utc": 1784554920.0
+        }
+      },
+      {
+        "kind": "t3",
+        "data": {
+          "id": "r2p002",
+          "name": "t3_r2p002",
+          "subreddit": "golang",
+          "subreddit_name_prefixed": "r/golang",
+          "title": "sqlc vs sqlx in 2026",
+          "selftext": "Starting a new service and cannot decide. What are people actually using day to day?",
+          "author": "b_tomlin",
+          "permalink": "/r/golang/comments/r2p002/sqlc_vs_sqlx_in_2026/",
+          "url": "https://www.reddit.com/r/golang/comments/r2p002/sqlc_vs_sqlx_in_2026/",
+          "score": 41,
+          "num_comments": 55,
+          "over_18": false,
+          "created_utc": 1784546400.0
+        }
+      }
+    ]
+  }
+}
