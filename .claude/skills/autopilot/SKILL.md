@@ -1,9 +1,9 @@
 ---
 name: autopilot
-description: Starts, stops, or reports on unattended execution of the whole issue queue. Refuses to start unless CI is actually gating merges.
+description: Starts, stops, or reports on unattended execution of the whole ticket queue. Refuses to start unless CI is actually gating merges.
 argument-hint: "on | off | status"
 disable-model-invocation: true
-allowed-tools: Read, Edit, Bash(gh issue *), Bash(gh pr *), Bash(gh repo view *), Bash(gh api repos/*), Bash(git add *), Bash(git commit *), Bash(git push *), Skill
+allowed-tools: Read, Glob, Edit, Bash(gh pr *), Bash(gh repo view *), Bash(gh api repos/*), Bash(git *), Skill
 ---
 
 Requested: $ARGUMENTS (default `status`)
@@ -13,9 +13,10 @@ clone and every flip is auditable. `next-ticket` refuses to work while `enabled`
 
 ## `status`
 
-Report, in this order: whether autopilot is on, how many issues are `in-progress` against
-`maxInFlight`, how many are `ready`, how many are `blocked` and on what, and whether any sit
-at `needs-attention` — those need a human and will never clear on their own.
+Report, in this order: whether autopilot is on, how many tickets are in progress against
+`maxInFlight`, how many are ready, how many are blocked and on what, and whether any sit
+at needs-attention — those need a human and will never clear on their own. Derive all of
+it from `docs/tickets/` plus branches, the way `/board` does.
 
 ## `on`
 
@@ -33,8 +34,14 @@ Check every item and **refuse if any fails**, naming the failure and the fix:
 3. **Auto-merge is enabled on the repository** — `gh api repos/{owner}/{repo} -q .allow_auto_merge`
    must be `true`. (`gh repo view --json autoMergeAllowed` does not exist; the field is only
    exposed by the REST API.)
-4. **There is at least one `ready` issue.** If everything is `blocked`, run `unblock` first
-   and say so.
+4. **There is at least one ready ticket** in `docs/tickets/`: `status: todo` in main, all
+   `depends` done, no `claude/NNN-*` branch. Use the same derivation `/board` uses.
+
+Autopilot's auto-merge requires a GitHub remote: checks 1–3 are what make `--auto` defer
+to CI instead of merging blind, and only GitHub enforces them server-side here. On GitLab
+or a local-only repository, refuse `on` and point at the manual loop instead — "take the
+next ticket", human merges. The queue itself works everywhere; unattended merging is the
+part that needs a server-side gate.
 
 Report which checks passed even when you refuse. "Preflight failed" without a reason wastes
 the next ten minutes.

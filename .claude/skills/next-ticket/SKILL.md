@@ -1,70 +1,69 @@
 ---
 name: next-ticket
-description: Picks the next dispatchable issue and implements it, without anyone naming which one. Serializes on the in-progress label so concurrent runs cannot claim the same ticket.
+description: Picks the next dispatchable ticket from docs/tickets/ and implements it, without anyone naming which one. Claims by pushing the ticket branch, so concurrent runs cannot take the same ticket.
 argument-hint: "[max tickets in flight, default 1]"
-allowed-tools: Bash(gh issue *), Read, Write, Edit, Grep, Glob, Bash, Agent
+allowed-tools: Read, Glob, Write, Edit, Grep, Bash, Agent
 ---
 
 Requested: $ARGUMENTS
+
+The queue lives in `docs/tickets/` — statuses are derived from git, never stored
+elsewhere. See `docs/tickets/README.md` for the model.
 
 ## 0. Read the kill switch
 
 Read `.claude/autopilot.json`.
 
-- `maxInFlight` from that file is the limit for step 1, unless the request passed a number,
-  which wins.
-- If this run was started by a routine or asked for **autopilot**, and `enabled` is `false`,
-  **stop immediately**. Say autopilot is off and that `/autopilot on` turns it back on. Do
-  not work the ticket anyway.
+- `maxInFlight` from that file is the limit for step 1, unless the request passed a
+  number, which wins.
+- If this run was started by a routine or asked for **autopilot**, and `enabled` is
+  `false`, **stop immediately**. Say autopilot is off and that `/autopilot on` turns it
+  back on. Do not work the ticket anyway.
 
-A human asking for one ticket directly in a session is not autopilot — serve that whatever
-the flag says. The switch governs unattended execution, not the skill.
+A human asking for one ticket directly in a session is not autopilot — serve that
+whatever the flag says. The switch governs unattended execution, not the skill.
 
 ## 1. Check whether there is room
 
-```
-gh issue list --state open --label in-progress --json number,title
-```
-
-If the count is at or above the limit, **stop**. Report which tickets are in flight and
-exit. This check is what keeps two runs from grabbing the same issue: without it, both read
-the same "next ready" before either can claim it.
-
-Raising the limit above 1 is a deliberate choice. Parallel work is bounded by your review
-throughput and by plan usage limits, not by how many issues are open.
+In flight = tickets whose branch `claude/NNN-*` exists while the file in main still says
+`todo`. Count them (remote branches too, when a remote exists). At or above the limit —
+**stop** and report what is in flight. This check is what keeps two runs from claiming
+the same ticket.
 
 ## 2. Pick the next ticket
 
+Ready = `status: todo` in main, every id in `depends` is `done` in main, and no
+`claude/NNN-*` branch exists. Take the **lowest id** — the planner numbers tickets in
+dependency order, so lowest-first is the intended sequence. Skip any ticket whose branch
+carries `needs-attention`: a human must look at those before a retry.
+
+## 3. Claim it by pushing the branch
+
 ```
-gh issue list --state open --label ready --json number,title,labels
+git checkout main && git pull
+git checkout -b claude/NNN-<slug>
+git push -u origin claude/NNN-<slug>    # skip the push when there is no remote
 ```
 
-Discard anything also labeled `in-progress`, `in-review`, or `needs-attention` —
-`needs-attention` means a human has to look before it is retried.
+The push **is** the lock: if it fails because the branch already exists, another run got
+there first — say so and pick the next ready ticket (once). With no remote, creating the
+local branch is the claim.
 
-Take the **lowest issue number** that survives. Issue numbers follow the order the planner
-created them, which is dependency order, so lowest-first is the intended sequence.
+## 4. If nothing is ready
 
-## 3. If nothing is ready
+Stop and say which of these it is — the distinction tells the human their next move:
 
-Stop, and say which of these it is — the distinction tells the human what to do next:
+- **Blocked work exists** — name the blocked tickets and the unmerged tickets holding them.
+- **Everything is in review** — the queue advances on merges; that is the human's move.
+- **Something needs attention** — name it; it will never clear on its own.
+- **Nothing left** — every ticket is done. Say so plainly.
 
-- **Blocked work exists.** Name the blocked issues and the open issues holding them. If some
-  dependency is closed and the label just was not refreshed, say the `unblock` skill should run.
-- **Everything is in review.** The queue is waiting on merges, which is the human's move.
-- **Nothing left.** All issues are closed. Say so plainly.
+Do not invent work, and do not take a blocked ticket because it looks ready to you.
 
-Do not invent work, and do not pick a `blocked` issue because it looks ready to you. The
-labels are the queue.
+## 5. Run it
 
-## 4. Run it
+Invoke the `execute-ticket` skill for the chosen id. Everything about how the ticket is
+implemented lives there — do not restate or second-guess it here.
 
-Invoke the `execute-ticket` skill for the chosen issue number. It claims the issue, does the
-work, and opens a pull request. Everything about how the ticket is implemented lives there —
-do not restate or second-guess it here.
-
-## Stop conditions
-
-Handle exactly one ticket per run. Do not loop back to step 1 for another. The chain is
-advanced by the routine firing again after a merge, so that a human review sits between
-every ticket — which is the whole point of the gate.
+Handle exactly one ticket per run. The chain advances when a merge fires the next run,
+so review sits between tickets by construction.

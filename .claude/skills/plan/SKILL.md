@@ -3,7 +3,7 @@ name: plan
 description: Turns docs/PRD.md into an architecture sketch and a set of independent tickets sized for one agent each.
 argument-hint: [optional: which part of the PRD to plan]
 disable-model-invocation: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash(gh issue *), Bash(gh label *), Bash(gh repo view *)
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash(git *)
 ---
 
 Scope: $ARGUMENTS
@@ -37,45 +37,41 @@ Split the work so each ticket is:
 - **One agent's worth.** If a ticket needs three checkpoints and a day, split it.
 - **Verifiable.** Carries its own acceptance criteria, traced back to the PRD.
 
-## Step 3 — Show the tickets, then create them as GitHub issues
+## Step 3 — Show the tickets, then write them to docs/tickets/
 
 First print the full set for review, in this shape:
 
 ```
 ### <short title>
-Branch hint: <kebab-case-name>
+Role:        dev
 Files:       <likely paths>
-Depends on:  <other tickets, or "none">
+Depends on:  <ids, or none>
 Acceptance criteria:
   - ...
 ```
 
-**Confirm with the human before creating anything.** Issues are visible to everyone with
-repo access, and a batch of wrong ones is tedious to clean up.
+**Confirm with the human before creating anything.** A batch of wrong ticket files is
+tedious to clean up, and ids, once referenced by `depends`, should not be renumbered.
 
-Once confirmed, create them with `gh issue create`. Make sure the labels exist first
-(`gh label create ready`, `blocked`, `in-progress`, `in-review`, `needs-attention` —
-ignore errors if they already exist).
+Once confirmed, write one file per ticket to `docs/tickets/NNN-<slug>.md` in the format
+`docs/tickets/README.md` defines — zero-padded id continuing from the highest existing
+one, frontmatter with `id`, `title`, `role`, `depends`, `status: todo`, and the body
+carrying the likely files and acceptance criteria verbatim. The body **is** the contract
+`execute-ticket` and `validator` work from; a ticket without checkable criteria will be
+refused and bounce straight back.
 
-Label each issue:
+Number in dependency order: foundations get low ids, dependants higher — `next-ticket`
+dispatches lowest-first, so the numbering is the execution sequence.
 
-- **`ready`** — nothing blocks it; it can be dispatched now
-- **`blocked`** — depends on another ticket. Name the blocking issue number in the body,
-  and say in your summary that someone must relabel it to `ready` once the blocker closes
-
-The issue body **is** the contract that `execute-ticket` and `validator` work from, so it
-must carry the acceptance criteria verbatim, the likely files, and the dependencies. An
-issue without checkable acceptance criteria will be refused by `execute-ticket` and bounce
-straight back — write them properly here or not at all.
+Commit the ticket files (and the architecture docs) to main in one commit. No labels, no
+issue tracker, no API — the files are the queue, on any hosting or none.
 
 ## Step 4 — Order and parallelism
 
-State which issues can start at once and which wait. Recommend how many to dispatch in
-parallel: three to five is the working range, not "all of them". Parallelism is bounded by
-review throughput and by plan usage limits, not by how many tickets exist.
-
-Finish with the issue numbers you created, grouped into "dispatch now" and "waiting", so
-the human can fire the first batch immediately.
+State which tickets can start at once and which wait — `/board` will show the same thing
+from the files. Recommend how many to dispatch in parallel: three to five is the working
+range, not "all of them". Parallelism is bounded by review throughput and by plan usage
+limits, not by how many tickets exist.
 
 End with what you are least sure about in this plan. That is the part most worth a human
 looking at before any agent starts.
