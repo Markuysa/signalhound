@@ -32,7 +32,7 @@ jobs:
       - if: steps.check.outputs.present == 'true'
         uses: actions/setup-go@v5
         with:
-          go-version: stable
+          go-version-file: go.mod
           cache: true
 
       - if: steps.check.outputs.present == 'true'
@@ -44,10 +44,13 @@ jobs:
       - if: steps.check.outputs.present == 'true'
         run: go test -race -count=1 ./...
 
+      # v8 installs golangci-lint v2, which matches the v2 .golangci.yml. Pin the binary
+      # so a future release built against a newer Go than go.mod targets can't break CI —
+      # the failure that a floating "latest" caused on the first run.
       - if: steps.check.outputs.present == 'true'
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v8
         with:
-          version: latest
+          version: v2.5.0
 
   ui:
     name: UI
