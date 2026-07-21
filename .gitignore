@@ -41,3 +41,6 @@ data/
 # UI build output embedded into the binary
 ui/dist/
 docs/private/
+
+# TypeScript build cache
+ui/tsconfig.tsbuildinfo
