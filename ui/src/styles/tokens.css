@@ -1,0 +1,62 @@
+/* The single source of design tokens. Every value here comes from docs/DESIGN.md §2
+   verbatim. Nothing in src/ may hardcode a colour or spacing value — tailwind.config
+   surfaces these as utilities, and scripts/no-hardcoded-tokens.mjs fails the lint if a
+   raw hex literal appears anywhere in src/. */
+
+:root {
+  /* §2.1 colour */
+  --bg: #0b0e14;
+  --surface: #12161f;
+  --surface-2: #171c28;
+  --border: #232a38;
+  --border-soft: #1b2130;
+  --text: #e8eaf0;
+  --text-mut: #8b94a6;
+  --text-dim: #5c6b84;
+  --amber: #ffb224;
+  --amber-soft: rgba(255, 178, 36, 0.12);
+  --hot: #ff6b4a;
+  --live: #3dd68c;
+  --danger: #e5484d;
+
+  /* §2.3 geometry */
+  --r: 10px;
+  --sidebar-w: 216px;
+  --detail-w: 380px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* §2.4 focus: 2px amber outline, 2px offset. Applied to keyboard focus only. */
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+/* §2.4 motion: reduce disables all of it. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

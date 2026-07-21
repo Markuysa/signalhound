@@ -1,0 +1,157 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SignalMeter bands > renders a stable snapshot at 12 1`] = `
+<div
+  aria-label="Signal score 12 of 100"
+  class="inline-flex flex-col items-center gap-0.5"
+  data-color="text-dim"
+  data-filled="2"
+  data-score="12"
+  data-testid="signal-meter"
+  role="img"
+>
+  <div
+    class="flex items-end"
+    style="height: 22px; gap: 3.5px;"
+  >
+    <span
+      style="width: 5px; height: 11.440000000000001px; border-radius: 2px; background: var(--text-dim);"
+    />
+    <span
+      style="width: 5px; height: 14.08px; border-radius: 2px; background: var(--text-dim);"
+    />
+    <span
+      style="width: 5px; height: 16.72px; border-radius: 2px; background: var(--border);"
+    />
+    <span
+      style="width: 5px; height: 19.36px; border-radius: 2px; background: var(--border);"
+    />
+    <span
+      style="width: 5px; height: 22px; border-radius: 2px; background: var(--border);"
+    />
+  </div>
+  <span
+    class="font-mono tabular-nums text-text-mut"
+    style="font-size: 13px;"
+  >
+    12
+  </span>
+</div>
+`;
+
+exports[`SignalMeter bands > renders a stable snapshot at 45 1`] = `
+<div
+  aria-label="Signal score 45 of 100"
+  class="inline-flex flex-col items-center gap-0.5"
+  data-color="amber"
+  data-filled="3"
+  data-score="45"
+  data-testid="signal-meter"
+  role="img"
+>
+  <div
+    class="flex items-end"
+    style="height: 22px; gap: 3.5px;"
+  >
+    <span
+      style="width: 5px; height: 11.440000000000001px; border-radius: 2px; background: var(--amber);"
+    />
+    <span
+      style="width: 5px; height: 14.08px; border-radius: 2px; background: var(--amber);"
+    />
+    <span
+      style="width: 5px; height: 16.72px; border-radius: 2px; background: var(--amber);"
+    />
+    <span
+      style="width: 5px; height: 19.36px; border-radius: 2px; background: var(--border);"
+    />
+    <span
+      style="width: 5px; height: 22px; border-radius: 2px; background: var(--border);"
+    />
+  </div>
+  <span
+    class="font-mono tabular-nums text-text-mut"
+    style="font-size: 13px;"
+  >
+    45
+  </span>
+</div>
+`;
+
+exports[`SignalMeter bands > renders a stable snapshot at 70 1`] = `
+<div
+  aria-label="Signal score 70 of 100"
+  class="inline-flex flex-col items-center gap-0.5"
+  data-color="amber"
+  data-filled="4"
+  data-score="70"
+  data-testid="signal-meter"
+  role="img"
+>
+  <div
+    class="flex items-end"
+    style="height: 22px; gap: 3.5px;"
+  >
+    <span
+      style="width: 5px; height: 11.440000000000001px; border-radius: 2px; background: var(--amber);"
+    />
+    <span
+      style="width: 5px; height: 14.08px; border-radius: 2px; background: var(--amber);"
+    />
+    <span
+      style="width: 5px; height: 16.72px; border-radius: 2px; background: var(--amber);"
+    />
+    <span
+      style="width: 5px; height: 19.36px; border-radius: 2px; background: var(--amber);"
+    />
+    <span
+      style="width: 5px; height: 22px; border-radius: 2px; background: var(--border);"
+    />
+  </div>
+  <span
+    class="font-mono tabular-nums text-text-mut"
+    style="font-size: 13px;"
+  >
+    70
+  </span>
+</div>
+`;
+
+exports[`SignalMeter bands > renders a stable snapshot at 92 1`] = `
+<div
+  aria-label="Signal score 92 of 100"
+  class="inline-flex flex-col items-center gap-0.5"
+  data-color="hot"
+  data-filled="5"
+  data-score="92"
+  data-testid="signal-meter"
+  role="img"
+>
+  <div
+    class="flex items-end"
+    style="height: 22px; gap: 3.5px;"
+  >
+    <span
+      style="width: 5px; height: 11.440000000000001px; border-radius: 2px; background: var(--hot);"
+    />
+    <span
+      style="width: 5px; height: 14.08px; border-radius: 2px; background: var(--hot);"
+    />
+    <span
+      style="width: 5px; height: 16.72px; border-radius: 2px; background: var(--hot);"
+    />
+    <span
+      style="width: 5px; height: 19.36px; border-radius: 2px; background: var(--hot);"
+    />
+    <span
+      style="width: 5px; height: 22px; border-radius: 2px; background: var(--hot);"
+    />
+  </div>
+  <span
+    class="font-mono tabular-nums text-text-mut"
+    style="font-size: 13px;"
+  >
+    92
+  </span>
+</div>
+`;
