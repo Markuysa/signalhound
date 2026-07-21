@@ -1,0 +1,58 @@
+# SignalHound configuration. Copy to config.yaml and edit.
+#
+# Secrets are never written here. Keys ending in _env name an environment variable that
+# holds the secret, so this file is safe to commit. See ADR-007.
+
+icp:
+  description: >
+    Companies of 20–500 people shipping a product with LLMs (RAG, agents),
+    without a strong in-house ML team. Regions: EU, US. Languages: en, ru.
+  positive_signals:
+    - "complaining about LLM quality or cost in production"
+    - "hiring an LLM/AI engineer or consultant"
+  negative_signals:
+    - "student questions"
+    - "large corporations with ML departments"
+  languages: ["en", "ru"]
+  regions: ["EU", "US"]
+
+sources:
+  hackernews:
+    enabled: true
+    schedule: "*/30 * * * *"
+    keywords: ["RAG production", "LLM cost", "hiring LLM engineer"]
+  reddit:
+    enabled: false
+    schedule: "0 * * * *"
+    subreddits: ["LocalLLaMA", "MachineLearning", "golang"]
+    client_id_env: "SIGNALHOUND_REDDIT_CLIENT_ID"
+    client_secret_env: "SIGNALHOUND_REDDIT_CLIENT_SECRET"
+  rss:
+    enabled: false
+    schedule: "0 * * * *"
+    feeds:
+      - "https://example.com/jobs.rss"
+
+llm:
+  provider: openai-compatible
+  base_url: "http://localhost:11434/v1"   # Ollama
+  model: "qwen2.5:14b"
+  api_key_env: "SIGNALHOUND_LLM_API_KEY"
+  daily_budget_usd: 2.0
+
+scoring:
+  notify_threshold: 70
+
+notifiers:
+  telegram:
+    enabled: false
+    chat_id: "..."
+    bot_token_env: "SIGNALHOUND_TELEGRAM_BOT_TOKEN"
+
+server:
+  addr: "127.0.0.1:8080"
+  api_token_env: "SIGNALHOUND_API_TOKEN"
+
+store:
+  driver: sqlite
+  dsn: "signalhound.db"
