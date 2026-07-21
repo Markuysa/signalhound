@@ -1,7 +1,7 @@
 ---
 id: 4
 title: Reddit collector
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

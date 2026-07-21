@@ -1,7 +1,7 @@
 ---
 id: 9
 title: Scoring: ICP prompt assembly and strict-JSON score
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

@@ -1,7 +1,7 @@
 ---
 id: 18
 title: UI: ICP & Sources settings with test scoring
-role: dev
+role: frontend
 depends: [2, 15]
 status: todo
 ---

@@ -1,7 +1,7 @@
 ---
 id: 13
 title: Demo mode seed data
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

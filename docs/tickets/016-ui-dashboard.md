@@ -1,7 +1,7 @@
 ---
 id: 16
 title: UI: Dashboard
-role: dev
+role: frontend
 depends: [2]
 status: todo
 ---

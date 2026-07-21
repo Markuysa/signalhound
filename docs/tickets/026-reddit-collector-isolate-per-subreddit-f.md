@@ -1,7 +1,7 @@
 ---
 id: 26
 title: Reddit collector: isolate per-subreddit failures
-role: dev
+role: backend
 depends: [4]
 status: todo
 ---

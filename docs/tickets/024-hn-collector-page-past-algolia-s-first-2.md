@@ -1,7 +1,7 @@
 ---
 id: 24
 title: HN collector: page past Algolia's first 20 hits
-role: dev
+role: backend
 depends: [3]
 status: todo
 ---

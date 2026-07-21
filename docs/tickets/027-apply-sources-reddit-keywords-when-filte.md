@@ -1,7 +1,7 @@
 ---
 id: 27
 title: Apply sources.reddit.keywords when filtering signals
-role: dev
+role: backend
 depends: [4, 10]
 status: todo
 ---

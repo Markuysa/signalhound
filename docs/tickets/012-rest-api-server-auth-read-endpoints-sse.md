@@ -1,7 +1,7 @@
 ---
 id: 12
 title: REST API: server, auth, read endpoints, SSE
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

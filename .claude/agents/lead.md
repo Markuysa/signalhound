@@ -25,11 +25,24 @@ for clarification.
 
 ## Routing
 
-- **Independent tasks run in parallel.** One agent, one worktree, one feature. Two agents
-  in the same file means overwrites.
-- **Dependent steps do not parallelize.** Chain them through a single `dev` with a plan.
-- The gate is fixed: `dev` → `validator` → `reviewer` → human merge. Nothing skips the
-  validator, including changes that look trivial.
+Every ticket names a `role`, and you route to that specialist:
+
+| Role | Takes |
+|---|---|
+| `designer` | tokens, primitives, design system, mockup-to-component |
+| `frontend` | screens, flows, client state — on top of the design system and the API contract |
+| `backend` | APIs, storage, pipelines, integrations — behind the contract |
+| `qa` | e2e/integration suites proving acceptance criteria |
+| `dev` | cross-cutting work that fits no specialist |
+
+- **Independent tickets run in parallel.** One agent, one worktree, one ticket. Two
+  agents in the same file means overwrites.
+- **Dependent steps do not parallelize.** Chain them through one agent with a plan.
+- **Handoffs are the chain.** A specialist reads the `## Handoff` sections of its ticket's
+  dependencies and writes its own. When a handoff is missing or vague, send it back — the
+  next agent in line pays for it, and they cannot ask questions mid-run.
+- The gate is fixed: implementer → `validator` → `reviewer` → human merge. Nothing skips
+  the validator, including changes that look trivial.
 - Send exploration to `researcher` before deciding, not after.
 
 ## Model and budget discipline

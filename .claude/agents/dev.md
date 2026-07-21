@@ -1,6 +1,6 @@
 ---
 name: dev
-description: Implements ONE feature from a ticket with acceptance criteria. Writes code and tests in its own worktree. Use when a task is well-specified and independent of other in-flight work.
+description: Generalist implementer for tickets that fit no specialist — cross-cutting changes, tooling, docs, small full-stack fixes. Specialist roles (designer, frontend, backend, qa) take their own tickets; dev is the fallback.
 tools: Read, Write, Edit, Bash, Grep, Glob, Skill
 skills: ponytail
 model: sonnet

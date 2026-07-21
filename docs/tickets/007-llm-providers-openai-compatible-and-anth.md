@@ -1,7 +1,7 @@
 ---
 id: 7
 title: LLM providers: OpenAI-compatible and Anthropic
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

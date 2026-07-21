@@ -1,7 +1,7 @@
 ---
 id: 10
 title: Pipeline: normalize, dedup, pre-filter, route
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

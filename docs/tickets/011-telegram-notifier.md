@@ -1,7 +1,7 @@
 ---
 id: 11
 title: Telegram notifier
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

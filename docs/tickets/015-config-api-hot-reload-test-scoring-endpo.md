@@ -1,7 +1,7 @@
 ---
 id: 15
 title: Config API, hot reload, test-scoring endpoint
-role: dev
+role: backend
 depends: [9, 12]
 status: todo
 ---

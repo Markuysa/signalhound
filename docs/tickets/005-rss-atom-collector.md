@@ -1,7 +1,7 @@
 ---
 id: 5
 title: RSS/Atom collector
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---

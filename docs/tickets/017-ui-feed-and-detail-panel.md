@@ -1,7 +1,7 @@
 ---
 id: 17
 title: UI: Feed and detail panel
-role: dev
+role: frontend
 depends: [2]
 status: todo
 ---

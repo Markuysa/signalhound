@@ -43,12 +43,19 @@ First print the full set for review, in this shape:
 
 ```
 ### <short title>
-Role:        dev
+Role:        designer | frontend | backend | qa | dev
 Files:       <likely paths>
 Depends on:  <ids, or none>
 Acceptance criteria:
   - ...
 ```
+
+Assign the role by what the ticket produces, not by which files it touches: design
+system and component look → `designer`; screens and client logic → `frontend`; APIs,
+storage, pipelines → `backend`; test suites proving criteria → `qa`; cross-cutting or
+unclassifiable → `dev`. Sequence specialists through `depends`: designer tickets come
+before the screens that consume them, contract-defining backend tickets before both, and
+a `qa` ticket after the features it proves.
 
 **Confirm with the human before creating anything.** A batch of wrong ticket files is
 tedious to clean up, and ids, once referenced by `depends`, should not be renumbered.

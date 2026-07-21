@@ -1,7 +1,7 @@
 ---
 id: 6
 title: Collector runner: scheduling, rate limiting, cursors
-role: dev
+role: backend
 depends: [1]
 status: todo
 ---
