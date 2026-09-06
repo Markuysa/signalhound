@@ -1,0 +1,28 @@
+{
+  "kind": "Listing",
+  "data": {
+    "after": null,
+    "dist": 1,
+    "before": null,
+    "children": [
+      {
+        "kind": "t3",
+        "data": {
+          "id": "l1p001",
+          "name": "t3_l1p001",
+          "subreddit": "LocalLLaMA",
+          "subreddit_name_prefixed": "r/LocalLLaMA",
+          "title": "Our self-hosted inference bill is now higher than the API we left",
+          "selftext": "Two A100s idling most of the day. Looking for someone who has actually sized this properly.",
+          "author": "quantized_kev",
+          "permalink": "/r/LocalLLaMA/comments/l1p001/our_selfhosted_inference_bill_is_now_higher/",
+          "url": "https://www.reddit.com/r/LocalLLaMA/comments/l1p001/our_selfhosted_inference_bill_is_now_higher/",
+          "score": 402,
+          "num_comments": 137,
+          "over_18": false,
+          "created_utc": 1784550000.0
+        }
+      }
+    ]
+  }
+}
